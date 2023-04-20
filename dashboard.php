@@ -27,12 +27,39 @@
             style="height:78vh;">
                 <div class="card h-100">
                     <div class="card-header">
-                        <h3>DashBoard</h3>
+                        <h3>How can I help you?</h3>
+                        <table class = 'table' id="input">
+                            <thead>
+                                <tr>
+                                    <th>
+                                    <input type="text" class='form-control' name='input'>
+                                    </th>
+                                    <th>
+                                    <a href="javascript:void(0)"
+                                    data-url=""
+                                    onclick=""
+                                    data-title="Update Status"
+                                    class="btn btn-danger"
+                                    data-modal-height="200px"
+                                    data-modal-size="default"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-placement="top"
+                                    title="Record">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-mic" viewBox="0 0 16 16">
+                                    <path d="M3.5 6.5A.5.5 0 0 1 4 7v1a4 4 0 0 0 8 0V7a.5.5 0 0 1 1 0v1a5 5 0 0 1-4.5 4.975V15h3a.5.5 0 0 1 0 1h-7a.5.5 0 0 1 0-1h3v-2.025A5 5 0 0 1 3 8V7a.5.5 0 0 1 .5-.5z"/>
+                                    <path d="M10 8a2 2 0 1 1-4 0V3a2 2 0 1 1 4 0v5zM8 0a3 3 0 0 0-3 3v5a3 3 0 0 0 6 0V3a3 3 0 0 0-3-3z"/>
+                                    </svg>
+                        </a>
+                                    </th>
+                                </tr>
+                            </thead>
+
+                    </table>
                     </div>
                     <div class="card-body">
                         <h4 class="card-title"></h4>
                         <p class="card-text">
-                            Hi. Get to work.
+                            
                         </p>
                     </div>
                 </div>
