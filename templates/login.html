@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login Page</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+            font-size: xx-large;
+		}
+
+		form {
+			margin: 50px auto;
+			max-width: 400px;
+			padding: 20px;
+			background-color: #333;
+			border-radius: 5px;
+			display: flex;
+			flex-direction: column;
+		}
+
+		input[type="text"], input[type="password"] {
+			padding: 10px;
+			margin: 10px 0;
+			border: none;
+			border-radius: 5px;
+			background-color: #fff;
+			color: #333;
+			font-size: 16px;
+			font-family: Arial, sans-serif;
+		}
+
+		input[type="submit"] {
+			background-color: #4CAF50;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			padding: 10px;
+			font-size: 16px;
+			font-weight: bold;
+			margin-top: 20px;
+			cursor: pointer;
+		}
+
+		nav {
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			padding: 10px;
+			background-color: #333;
+		}
+
+		nav a {
+			color: white;
+			text-decoration: none;
+			padding: 10px;
+			font-weight: bold;
+			margin-left: 10px;
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html">Home</a>
+		<a href="blog.html">Blog</a>
+		<a href="about.html">About</a>
+	</nav>
+	<h1>Enter your credentials!</h1>
+	<form action="#" method="POST">
+		<label for="sapid">Sapid:</label>
+		<input type="text" id="sapid" name="sapid" required>
+
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password" required>
+
+		<input type="submit" value="Login/Signup">
+	</form>
+</body>
+</html>

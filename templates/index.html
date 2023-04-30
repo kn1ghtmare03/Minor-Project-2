@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Virtual Assistant</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<style>
+		body {
+			background-color: black;
+			color: white;
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+		}
+
+		button {
+			color: white;
+			background-color: transparent;
+			border: none;
+			font-size: 24px;
+			margin: 20px auto;
+			display: block;
+		}
+
+		button .mic-icon {
+			background-color: white;
+			color: black;
+			padding: 10px;
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 10px;
+			border: 2px solid white;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+			background-color: #333;
+		}
+
+		nav a {
+			color: white;
+			text-decoration: none;
+			padding: 10px;
+			font-weight: bold;
+			margin-left: 10px;
+		}
+
+		nav a:last-child {
+			margin-left: auto;
+		}
+
+		nav .login-btn {
+			padding: 10px;
+			border: 2px solid white;
+			border-radius: 5px;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+
+		nav .upload-btn {
+			padding: 10px;
+			border: 2px solid white;
+			border-radius: 5px;
+			margin-right: 103px;
+			cursor: pointer;
+			
+			
+		}
+
+		.output-box {
+			background-color: white;
+			color: black;
+			padding: 10px;
+			border-radius: 5px;
+			margin: 30px auto;
+			width: 500px;
+			height: 50px;
+			overflow-wrap: break-word;
+			white-space: pre-line;
+			line-height: 1.5;
+			font-size: 20px;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+</head>
+<body>
+	<nav>
+		<a href="index.html">Home</a>
+		<a href="blog.html">Blog</a>
+		<a href="about.html">About</a>
+		<button class="upload-btn" onclick="document.getElementById('pdf-file').click()"><i class="fas fa-file-upload"></i> Upload PDF</button>
+		<input type="file" id="pdf-file" accept="application/pdf" style="display: none" />
+		<a href="login.html" class="login-btn">Login/Signup</a>
+	</nav>
+	<h1>How can I help you today?</h1>
+	<button onclick="speak()"><span class="mic-icon"><i class="fas fa-microphone"></i></span></button>
+	<div class="output-box"></div>
+
+	<script>
+		function uploadPDF() {
+			var input = document.createElement('input');
+			input.type = 'file';
+			input.accept = 'application/pdf';
+			input.onchange = function(event) {
+				var file = event.target.files[0];
+				var outputBox = document.querySelector('.output-box');
+				outputBox.innerHTML = 'You have selected ' + file.name;
+			}
+			input.click();
+		}
+		
+		var uploadBtn = document.querySelector('.upload-btn');
+		uploadBtn.addEventListener('click', uploadPDF);
+	</script>
+	
