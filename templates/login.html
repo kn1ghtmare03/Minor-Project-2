@@ -6,8 +6,10 @@
 	<style>
 		body {
 			background-color: black;
+			background-image: url('../static/bg.jpg');
 			color: white;
 			font-family: Arial, sans-serif;
+			font-style:italic;
 		}
 
 		h1 {
@@ -19,7 +21,7 @@
 			margin: 50px auto;
 			max-width: 400px;
 			padding: 20px;
-			background-color: #333;
+			background-color: #33333300;
 			border-radius: 5px;
 			display: flex;
 			flex-direction: column;
@@ -53,7 +55,7 @@
 			justify-content: flex-start;
 			align-items: center;
 			padding: 10px;
-			background-color: #333;
+			background-color: #33333300;
 		}
 
 		nav a {
@@ -71,13 +73,12 @@
 		<a href="blog.html">Blog</a>
 		<a href="about.html">About</a>
 	</nav>
-	<h1>Enter your credentials!</h1>
 	<form action="#" method="POST">
 		<label for="sapid">Sapid:</label>
-		<input type="text" id="sapid" name="sapid" required>
+		<input type="text" id="sapid" name="sapid" placeholder='example@stu.upes.ac.in' required>
 
 		<label for="password">Password:</label>
-		<input type="password" id="password" name="password" required>
+		<input type="password" id="password" name="password" placeholder='********' required>
 
 		<input type="submit" value="Login/Signup">
 	</form>
