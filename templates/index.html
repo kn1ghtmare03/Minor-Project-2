@@ -14,7 +14,6 @@
 		h1 {
 			text-align: center;
 		}
-
 		button {
 			color: white;
 			background-color: transparent;
@@ -94,7 +93,7 @@
 <body>
 	<nav>
 		<a href="index.html">Home</a>
-		<a href="blog.html">Blog</a>
+		<a href="blog.html">Forum</a>
 		<a href="about.html">About</a>
 		<button class="upload-btn" onclick="document.getElementById('pdf-file').click()"><i class="fas fa-file-upload"></i> Upload PDF</button>
 		<input type="file" id="pdf-file" accept="application/pdf" style="display: none" />
@@ -103,6 +102,9 @@
 	<h1>How can I help you today?</h1>
 	<button onclick="speak()"><span class="mic-icon"><i class="fas fa-microphone"></i></span></button>
 	<div class="output-box"></div>
+	
+	</body>
+</html>
 
 	<script>
 		function uploadPDF() {
