@@ -17,7 +17,7 @@ os.environ["OPENAI_API_KEY"] = "******************"
 model = whisper.load_model("base.en")
 app = Flask(__name__)
 
-@app.route('/index.html')
+@app.route('/')
 def home():
     return render_template('index.html')
 @app.route('/login.html', methods=['GET', 'POST'])
@@ -34,7 +34,9 @@ def upload():
     file = request.files['file']
     filename = file.filename
     file.save(os.path.join('uploads', filename))
+    return 'File uploaded successfully'
 
+@app.route('/transcribe', methods=['POST'])
 def speak():
     p = pyaudio.PyAudio()
     FORMAT = pyaudio.paInt16
@@ -60,20 +62,23 @@ def speak():
     stream.stop_stream()
     stream.close()
     p.terminate()
-    table = tabula.read_pdf('/uploads/'+filename,pages=1)
-    df=pd.DataFrame(table[1])
+    print(query)
+    path="uploads/"+filename
+    table = tabula.read_pdf(path, pages=1)
+    df = pd.DataFrame(table[1])
     result = ""
-
     for column in df.columns[1:]:
         result += column + ": " + df[column].astype(str).str.cat() + "\n"
-    result=result.replace("nan","")
+    result = result.replace("nan","")
+
     texts =result.split("\n")
     embeddings = OpenAIEmbeddings()
     docsearch = FAISS.from_texts(texts, embeddings)
     chain = load_qa_chain(OpenAI(), chain_type="stuff")
     docs = docsearch.similarity_search(query)
 
-    print(chain.run(input_documents=docs, question=query))
+    res=chain.run(input_documents=docs, question=query)
+    return {"text": res}
 
 if __name__ == '__main__':
     app.run(debug=True)
