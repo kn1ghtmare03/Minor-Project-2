@@ -12,9 +12,9 @@ from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
 
 import os
-os.environ["OPENAI_API_KEY"] = "******************"
+os.environ["OPENAI_API_KEY"] = "************"
 
-model = whisper.load_model("base.en")
+model = whisper.load_model("small.en")
 app = Flask(__name__)
 
 @app.route('/')
@@ -31,10 +31,12 @@ def login():
 filename=""
 @app.route('/upload', methods=['POST'])
 def upload():
+    global filename
     file = request.files['file']
     filename = file.filename
-    file.save(os.path.join('uploads', filename))
-    return 'File uploaded successfully'
+    file.save(filename)
+    print(filename)
+    return "File uploaded successfully"
 
 @app.route('/transcribe', methods=['POST'])
 def speak():
@@ -63,8 +65,9 @@ def speak():
     stream.close()
     p.terminate()
     print(query)
-    path="uploads/"+filename
-    table = tabula.read_pdf(path, pages=1)
+    
+    path=filename
+    table = tabula.read_pdf(path, pages=1, encoding="ISO-8859-1")
     df = pd.DataFrame(table[1])
     result = ""
     for column in df.columns[1:]:
@@ -76,7 +79,6 @@ def speak():
     docsearch = FAISS.from_texts(texts, embeddings)
     chain = load_qa_chain(OpenAI(), chain_type="stuff")
     docs = docsearch.similarity_search(query)
-
     res=chain.run(input_documents=docs, question=query)
     return {"text": res}
 
