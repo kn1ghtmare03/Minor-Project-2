@@ -89,47 +89,56 @@
 			align-items: center;
 		}
 	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').submit(function(e) {
+          e.preventDefault();
+          var form_data = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: '{{ url_for("upload") }}',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+              $('#result').text(response);
+              $('#file').val('');
+            }
+          });
+        });
+      });
+    </script>
 </head>
 <body>
 	<nav>
-		<a href="index.html">Home</a>
-		<a href="blog.html">Forum</a>
-		<a href="about.html">About</a>
-		<button class="upload-btn" onclick="document.getElementById('pdf-file').click()"><i class="fas fa-file-upload"></i> Upload PDF</button>
-		<input type="file" id="pdf-file" accept="application/pdf" style="display: none" />
-		<a href="login.html" class="login-btn">Login/Signup</a>
+		<a href="/">Home</a>
+		<a href="/blog.html">Forum</a>
+		<a href="/about.html">About</a>
+		<form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+			<label for="file">Upload a file:</label>
+			<input type="file" id="file" name="file"><br><br>
+			<input class= "upload-btn" type="submit" value="UPLOAD">
+		</form>
+		<a href="/login.html" class="login-btn">Login/Signup</a>
 	</nav>
 	<h1>How can I help you today?</h1>
-	<button onclick="speak()"><span class="mic-icon"><i class="fas fa-microphone"></i></span></button>
-	<div class="output-box"></div>
-	
+	<button class="mic-icon" onclick="transcribe()">Speak</button>
+	<div id="output-box" class="output-box"></div>
+	<script>
+		function transcribe() {
+		  var xhr = new XMLHttpRequest();
+		  xhr.open('POST', '/transcribe');
+		  xhr.onload = function() {
+			if (xhr.status === 200) {
+			  var response = JSON.parse(xhr.responseText);
+			  document.getElementById('output-box').innerHTML = response.text;
+			}
+		  };
+		  xhr.send();
+		}
+		</script>
 	</body>
 </html>
-
-	<script>
-		function uploadPDF() {
-			var input = document.createElement('input');
-			input.type = 'file';
-			input.accept = 'application/pdf';
-			input.onchange = function(event) {
-				var file = event.target.files[0];
-				var outputBox = document.querySelector('.output-box');
-				outputBox.innerHTML = 'You have selected ' + file.name;
-			}
-			input.click();
-		}
-		
-		var uploadBtn = document.querySelector('.upload-btn');
-		uploadBtn.addEventListener('click', uploadPDF);
-		function speak() {
-			
-			var outputBox = document.querySelector('.output-box');
-
-			
-			var outputText = 'You have a class at xyz time';
-
-			
-			outputBox.innerHTML = outputText;
-		}
-	</script>
 	
