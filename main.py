@@ -40,26 +40,28 @@ def upload():
 
 @app.route('/transcribe', methods=['POST'])
 def speak():
-    p = pyaudio.PyAudio()
-    FORMAT = pyaudio.paInt16
-    CHANNELS = 1
-    RATE = 16000
-    CHUNK = int(RATE/10)  # 100 ms
+    # p = pyaudio.PyAudio()
+    # FORMAT = pyaudio.paInt16
+    # CHANNELS = 1
+    # RATE = 16000
+    # CHUNK = int(RATE/10)  # 100 ms
 
-    stream = p.open(format=FORMAT,
-                    channels=CHANNELS,
-                    rate=RATE,
-                    input=True,
-                    frames_per_buffer=CHUNK)
-    audio = np.array([], dtype=np.int16)
+    # stream = p.open(format=FORMAT,
+    #                 channels=CHANNELS,
+    #                 rate=RATE,
+    #                 input=True,
+    #                 frames_per_buffer=CHUNK)
+    # audio = np.array([], dtype=np.int16)
 
-    for i in range(int(RATE/CHUNK * 3)):
-        data = stream.read(CHUNK)
-        audio = np.append(audio, np.frombuffer(data, dtype=np.int16))
+    # for i in range(int(RATE/CHUNK * 3)):
+    #     data = stream.read(CHUNK)
+    #     audio = np.append(audio, np.frombuffer(data, dtype=np.int16))
 
-    torch_audio = torch.from_numpy(audio.flatten().astype(np.float32) / 32768.0)
+    # torch_audio = torch.from_numpy(audio.flatten().astype(np.float32) / 32768.0)
 
-    result = model.transcribe(torch_audio)
+    files = request.files
+    audioFile = files.get('audio_data')
+    result = model.transcribe(audioFile)
     query = result["text"]
     stream.stop_stream()
     stream.close()
