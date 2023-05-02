@@ -124,9 +124,7 @@
 		<a href="/login.html" class="login-btn">Login/Signup</a>
 	</nav>
 	<h1>How can I help you today?</h1>
-	<button class="mic-icon" id="recordButton">Speak</button>
-	<!-- <button class="mic-icon" onclick="transcribe()">Pause</button> -->
-	<button class="mic-icon" id="stopButton">Stop</button>
+	<button class="mic-icon" onclick="transcribe()">Speak</button>
 	<div id="output-box" class="output-box"></div>
 	<script>
 		function transcribe() {
@@ -141,8 +139,6 @@
 		  xhr.send();
 		}
 		</script>
-        <script src="../static/app.js"></script>
-        <script src="../static/recorder.js"></script>
 	</body>
 </html>
 	

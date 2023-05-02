@@ -1,18 +1,19 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pyaudio
 import numpy as np
 import pandas as pd
 import torch
 import whisper
 import tabula
+import librosa
 from langchain.embeddings.openai import OpenAIEmbeddings
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import ElasticVectorSearch, Pinecone, Weaviate, FAISS
 from langchain.chains.question_answering import load_qa_chain
 from langchain.llms import OpenAI
-
 import os
-os.environ["OPENAI_API_KEY"] = "************"
+os.environ["OPENAI_API_KEY"] = "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"
+os.environ['SERPAPI_API_KEY']="fe813d3e3091f31428eb2bf2f0631487f48c9cd5ddbd663f073c90d894068c63"
 
 model = whisper.load_model("small.en")
 app = Flask(__name__)
@@ -61,11 +62,11 @@ def speak():
 
     files = request.files
     audioFile = files.get('audio_data')
-    result = model.transcribe(audioFile)
+    print(audioFile)
+    audioData, sr = librosa.load(audioFile)
+    audio_tensor = torch.from_numpy(np.array(audioData))
+    result = model.transcribe(audio_tensor)
     query = result["text"]
-    stream.stop_stream()
-    stream.close()
-    p.terminate()
     print(query)
     
     path=filename
@@ -82,7 +83,9 @@ def speak():
     chain = load_qa_chain(OpenAI(), chain_type="stuff")
     docs = docsearch.similarity_search(query)
     res=chain.run(input_documents=docs, question=query)
-    return {"text": res}
+    data ={"text": res}
+    return jsonify(data)
 
 if __name__ == '__main__':
     app.run(debug=True)
+    embeddings = OpenAIEmbeddings()

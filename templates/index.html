@@ -14,25 +14,27 @@
 		h1 {
 			text-align: center;
 		}
-		button {
-			color: white;
-			background-color: transparent;
-			border: none;
-			font-size: 24px;
-			margin: 20px auto;
-			display: block;
-		}
+		.button {
+    background: #1bbbac;
+    color: #383b3a;
+    border-radius: 5px;
+    box-shadow: 0 3px 5px #777777, inset 0 0 0px #777777;
+    transition: transform 200ms;
+}
+.stop{
+background: #ff0000;
+}
 
-		button .mic-icon {
-			background-color: white;
-			color: #f33770;
-			padding: 10px;
-			border-radius: 50%;
-			display: inline-block;
-			margin-right: 10px;
-			border: 2px solid white;
-		}
+.button:hover {
+    align-items:center;	 
+    background: #1bb7a9;
+    box-shadow: 0 0px 0px #777777, inset 0 0 10px #777777;
+}
 
+.button:active {
+    align-items:center; 
+    transform: scale(0.98);
+}
 		nav {
 			display: flex;
 			justify-content: space-between;
@@ -77,8 +79,8 @@
 			padding: 10px;
 			border-radius: 5px;
 			margin: 30px auto;
-			width: 500px;
-			height: 50px;
+			width: 800px;
+			min-height: 50px;
 			overflow-wrap: break-word;
 			white-space: pre-line;
 			line-height: 1.5;
@@ -88,6 +90,22 @@
 			justify-content: center;
 			align-items: center;
 		}
+		#testId{
+	display: none
+}
+#elementList{
+	display: none
+}
+.button-box {
+    width: 250px;
+    height: 150px;
+    /* border: 1px solid black; */
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 	</style>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
@@ -124,7 +142,11 @@
 		<a href="/login.html" class="login-btn">Login/Signup</a>
 	</nav>
 	<h1>How can I help you today?</h1>
-	<button class="mic-icon" onclick="transcribe()">Speak</button>
+<div class="button-box">
+	<button class="button" id="recordButton">Speak</button>
+	<!-- <button class="mic-icon" onclick="transcribe()">Pause</button> -->
+	<button class="button stop" id="stopButton">Stop</button>
+	</div>
 	<div id="output-box" class="output-box"></div>
 	<script>
 		function transcribe() {
@@ -139,6 +161,9 @@
 		  xhr.send();
 		}
 		</script>
+        <script src="../static/app.js"></script>
+        <script src="../static/recorder.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.4.0/axios.js" integrity="sha512-RjvSEaeDqPCfUVQ9kna2/2OqHz/7F04IOl1/66LmQjB/lOeAzwq7LrbTzDbz5cJzlPNJ5qteNtHR56XaJSTNWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 	</body>
 </html>
 	
