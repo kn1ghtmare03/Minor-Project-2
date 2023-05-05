@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Virtual Assistant</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<style>
+		body {
+			background-color: black;
+			background-image: url('../static/bg.jpg');
+			color: white;
+			font-family: Arial, sans-serif;
+		}
+
+		h1 {
+			text-align: center;
+		}
+		button {
+			color: white;
+			background-color: transparent;
+			border: none;
+			font-size: 24px;
+			margin: 20px auto;
+			display: block;
+		}
+
+		button .mic-icon {
+			background-color: white;
+			color: #f33770;
+			padding: 10px;
+			border-radius: 50%;
+			display: inline-block;
+			margin-right: 10px;
+			border: 2px solid white;
+		}
+
+		nav {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 10px;
+			background-color: #33333300;
+		}
+
+		nav a {
+			color: white;
+			text-decoration: none;
+			padding: 10px;
+			font-weight: bold;
+			margin-left: 10px;
+		}
+
+		nav a:last-child {
+			margin-left: auto;
+		}
+
+		nav .login-btn {
+			padding: 10px;
+			border: 2px solid white;
+			border-radius: 5px;
+			margin-left: 10px;
+			cursor: pointer;
+		}
+
+		nav .upload-btn {
+			padding: 10px;
+			border: 2px solid white;
+			border-radius: 5px;
+			margin-right: 103px;
+			cursor: pointer;
+			
+			
+		}
+
+		.output-box {
+			background-color: white;
+			color: black;
+			padding: 10px;
+			border-radius: 5px;
+			margin: 30px auto;
+			width: 500px;
+			height: 50px;
+			overflow-wrap: break-word;
+			white-space: pre-line;
+			line-height: 1.5;
+			font-size: 20px;
+			text-align: center;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+	</style>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+        $('form').submit(function(e) {
+          e.preventDefault();
+          var form_data = new FormData(this);
+          $.ajax({
+            type: 'POST',
+            url: '{{ url_for("upload") }}',
+            data: form_data,
+            contentType: false,
+            cache: false,
+            processData: false,
+            success: function(response) {
+              $('#result').text(response);
+              $('#file').val('');
+            }
+          });
+        });
+      });
+    </script>
+</head>
+<body>
+	<nav>
+		<a href="/">Home</a>
+		<a href="/blog.html">Forum</a>
+		<a href="/about.html">About</a>
+		<form method="POST" action="{{ url_for('upload') }}" enctype="multipart/form-data">
+			<label for="file">Upload a file:</label>
+			<input type="file" id="file" name="file"><br><br>
+			<input class= "upload-btn" type="submit" value="UPLOAD">
+		</form>
+		<a href="/login.html" class="login-btn">Login/Signup</a>
+	</nav>
+	<h1>How can I help you today?</h1>
+	<button class="mic-icon" onclick="transcribe()">Speak</button>
+	<div id="output-box" class="output-box"></div>
+	<script>
+		function transcribe() {
+		  var xhr = new XMLHttpRequest();
+		  xhr.open('POST', '/transcribe');
+		  xhr.onload = function() {
+			if (xhr.status === 200) {
+			  var response = JSON.parse(xhr.responseText);
+			  document.getElementById('output-box').innerHTML = response.text;
+			}
+		  };
+		  xhr.send();
+		}
+		</script>
+	</body>
+</html>
+	
